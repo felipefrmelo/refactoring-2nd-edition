@@ -17,15 +17,18 @@ interface PlayDictionary {
   [key: string]: Play;
 }
 
-export function statement(invoice: Invoice, plays: PlayDictionary) {
-  let totalAmount = 0;
-  let volumeCredits = 0;
-  let result = `Statement for ${invoice.customer}\n`;
+function formatMoney(amount: number) {
   const { format } = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     maximumFractionDigits: 2,
   });
+  return format(amount);
+}
+export function statement(invoice: Invoice, plays: PlayDictionary) {
+  let totalAmount = 0;
+  let volumeCredits = 0;
+  let result = `Statement for ${invoice.customer}\n`;
 
   for (const perf of invoice.performances) {
     const play = plays[perf.playID];
@@ -61,12 +64,12 @@ export function statement(invoice: Invoice, plays: PlayDictionary) {
     }
 
     // exibe a linha para esta requisição
-    result += `  ${play.name}: ${format(thisAmount / 100)} (${
+    result += `  ${play.name}: ${formatMoney(thisAmount / 100)} (${
       perf.audience
     } seats)\n`;
     totalAmount += thisAmount;
   }
-  result += `Amount owed is ${format(totalAmount / 100)}\n`;
+  result += `Amount owed is ${formatMoney(totalAmount / 100)}\n`;
   result += `You earned ${volumeCredits} credits\n`;
 
   return result;
