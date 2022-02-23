@@ -36,4 +36,8 @@ describe('statement', () => {
 
     expect(statement(invoices[2], plays)).toEqual(expected);
   });
+
+  it('should throw new Error("unknow type: wrongType")', () => {
+    expect(() => statement(invoices[3], plays)).toThrow(new Error('unknow type: wrongType'));
+  });
 });

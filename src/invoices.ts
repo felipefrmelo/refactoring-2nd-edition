@@ -42,4 +42,17 @@ export const invoices = [
       },
     ],
   },
+  {
+    customer: 'BigCo',
+    performances: [
+      {
+        playID: 'as-like',
+        audience: 40,
+      },
+      {
+        playID: 'wrongType',
+        audience: 0,
+      },
+    ],
+  },
 ];
